@@ -12,17 +12,20 @@ int cerinta, vec[101], n, k = 0, nr, maxK, maxNr = 0, maxNrPos, temp, nrCif[101]
 void rotateCif() {
 	for (int i = 1; i <= n; i++) {
 		temp = vec[i];
-		k = 0;
-		while (temp > 0)
-		{
-			temp /= 10;
-			k++;
-		}
-		if (k != nrCif[i])
-			vec[i] = vec[i] * 10;
-		else {
-			kTemp = int(pow(10.0, nrCif[i] - 1));
-			vec[i] = vec[i] % int(pow(10.0, nrCif[i] - 1)) * 10 + vec[i] / kTemp;
+		if (temp != 0) {
+			k = 0;
+			while (temp > 0)
+			{
+				temp /= 10;
+				k++;
+			}
+			if (k != nrCif[i])
+				vec[i] = vec[i] * 10;
+			else {
+				kTemp = int(pow(10.0, nrCif[i] - 1));
+				vec[i] = vec[i] % int(pow(10.0, nrCif[i] - 1)) * 10 + vec[i] / kTemp;
+				cout << vec[i] << "\n";
+			}
 		}
 	}
 }
@@ -49,13 +52,13 @@ int cerinta1() {
 
 void cerinta2() {
 	maxK = cerinta1();
-	rotateCif();
-	while (maxNr != vec[maxNrPos]) {
+	do
+	{
+		rotateCif();
 		k = cerinta1();
 		if (k > maxK)
 			maxK = k;
-		rotateCif();
-	}
+	} while (maxNr != vec[maxNrPos]);
 	out << maxK;
 }
 
@@ -81,14 +84,16 @@ void readNrs() {
 }
 
 void defaultC() {
-	for (int i = 1; i <= n; i++)
+	/*for (int i = 1; i <= n; i++)
 		cout << vec[i] << " " << nrCif[i] << "\n";
 	rotateCif();
 	for (int i = 1; i <= n; i++)
 		cout << vec[i] << " " << nrCif[i] << "\n";
 	rotateCif();
 	for (int i = 1; i <= n; i++)
-		cout << vec[i] << " " << nrCif[i] << "\n";
+		cout << vec[i] << " " << nrCif[i] << "\n";*/
+	for (int i = 0; i <= 10; i++)
+		cout << int(pow(10.0, i)) << "\n";
 }
 
 int main()
