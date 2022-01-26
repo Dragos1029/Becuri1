@@ -6,10 +6,17 @@ using namespace std;
 ifstream in("becuri1.in");
 ofstream out("becuri1.out");
 
-int cerinta, vec[101];
+int cerinta, vec[101], n, k = 0, nr;
 
 void cerinta1() {
-	cout << "cer 1";
+	for (int i = 1; i <= n; i++) {
+		nr = vec[i];
+		while (nr > 9)
+			nr /= 10;
+		if (nr == 2 || nr == 3 || nr == 5 || nr == 7)
+			k++;
+	}
+	out << k;
 }
 
 void cerinta2() {
@@ -20,9 +27,16 @@ void cerinta3() {
 	cout << "cer 3";
 }
 
+void readNrs() {
+	in >> n;
+	for (int i = 1; i <= n; i++)
+		in >> vec[i];
+}
+
 int main()
 {
     in >> cerinta;
+	readNrs();
 	switch (cerinta)
 	{
 	case 1:
