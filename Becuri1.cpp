@@ -1,26 +1,62 @@
 #include <iostream>
 #include <fstream>
+#include <cmath>
 
 using namespace std;
 
 ifstream in("becuri1.in");
 ofstream out("becuri1.out");
 
-int cerinta, vec[101], n, k = 0, nr;
+int cerinta, vec[101], n, k = 0, nr, maxK, maxNr = 0, maxNrPos, temp, nrCif[101], kTemp;
 
-void cerinta1() {
+void rotateCif() {
+	for (int i = 1; i <= n; i++) {
+		temp = vec[i];
+		k = 0;
+		while (temp > 0)
+		{
+			temp /= 10;
+			k++;
+		}
+		if (k != nrCif[i])
+			vec[i] = vec[i] * 10;
+		else {
+			kTemp = int(pow(10.0, nrCif[i] - 1));
+			vec[i] = vec[i] % int(pow(10.0, nrCif[i] - 1)) * 10 + vec[i] / kTemp;
+		}
+	}
+}
+
+int cerinta1() {
+	k = 0;
 	for (int i = 1; i <= n; i++) {
 		nr = vec[i];
-		while (nr > 9)
-			nr /= 10;
-		if (nr == 2 || nr == 3 || nr == 5 || nr == 7)
-			k++;
+		temp = nr;
+		kTemp = 0;
+		while (temp > 0) {
+			temp /= 10;
+			kTemp++;
+		}
+		if (kTemp == nrCif[i]) {
+			while (nr > 9)
+				nr /= 10;
+			if (nr == 2 || nr == 3 || nr == 5 || nr == 7)
+				k++;
+		}
 	}
-	out << k;
+	return k;
 }
 
 void cerinta2() {
-	cout << "cer 2";
+	maxK = cerinta1();
+	rotateCif();
+	while (maxNr != vec[maxNrPos]) {
+		k = cerinta1();
+		if (k > maxK)
+			maxK = k;
+		rotateCif();
+	}
+	out << maxK;
 }
 
 void cerinta3() {
@@ -29,8 +65,30 @@ void cerinta3() {
 
 void readNrs() {
 	in >> n;
-	for (int i = 1; i <= n; i++)
+	for (int i = 1; i <= n; i++) {
 		in >> vec[i];
+		if (vec[i] > maxNr) {
+			maxNr = vec[i];
+			maxNrPos = i;
+		}
+		temp = vec[i];
+		nrCif[i] = 0;
+		while (temp > 0) {
+			temp /= 10;
+			nrCif[i]++;
+		}
+	}
+}
+
+void defaultC() {
+	for (int i = 1; i <= n; i++)
+		cout << vec[i] << " " << nrCif[i] << "\n";
+	rotateCif();
+	for (int i = 1; i <= n; i++)
+		cout << vec[i] << " " << nrCif[i] << "\n";
+	rotateCif();
+	for (int i = 1; i <= n; i++)
+		cout << vec[i] << " " << nrCif[i] << "\n";
 }
 
 int main()
@@ -40,7 +98,7 @@ int main()
 	switch (cerinta)
 	{
 	case 1:
-		cerinta1();
+		out << cerinta1();
 		break;
 	case 2:
 		cerinta2();
@@ -49,6 +107,7 @@ int main()
 		cerinta3();
 		break;
 	default:
+		defaultC();
 		break;
 	}
 }
