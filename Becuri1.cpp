@@ -24,7 +24,7 @@ void rotateCif() {
 			else {
 				kTemp = int(pow(10.0, nrCif[i] - 1));
 				vec[i] = vec[i] % int(pow(10.0, nrCif[i] - 1)) * 10 + vec[i] / kTemp;
-				cout << vec[i] << "\n";
+				//cout << vec[i] << "\n";
 			}
 		}
 	}
@@ -47,18 +47,19 @@ int cerinta1() {
 				k++;
 		}
 	}
+	if (k == 3)
+		cout << vec[5] << " ";
 	return k;
 }
 
 void cerinta2() {
 	maxK = cerinta1();
-	do
-	{
+	for (int i = 1; i < nrCif[maxNrPos]; i++) {
 		rotateCif();
 		k = cerinta1();
 		if (k > maxK)
 			maxK = k;
-	} while (maxNr != vec[maxNrPos]);
+	}
 	out << maxK;
 }
 
